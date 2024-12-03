@@ -1,26 +1,71 @@
 ﻿#Requires AutoHotkey v2.0
 #SingleInstance force
+#Include SamFunctions.ahk
 Persistent
 SetNumLockState "AlwaysOn"
-
-ChangeCase(Text) {
-    ; Split the text into words
-    Words := StrSplit(Text, " ")
-    NewText := ""
-    
-    ; Loop through each word
-    for Index, Word in Words {
-        ; Convert the first letter to uppercase and the rest to lowercase
-        NewText .= (Index = 1 ? "" : " ") . StrUpper(SubStr(Word, 1, 1)) . StrLower(SubStr(Word, 2))
-    }
-    
-    return NewText
-}
 
 
 /************* End Initialization *********************************/
 /******************************************************************/
 /*************  Start LabVIEW Keys ********************************/
+#HotIf WinExist("ahk_exe Code.exe")
+#!v::WinActivate("ahk_exe Code.exe")
+
+#HotIf WinActive("ahk_exe explorer.exe")
+^!v:: ;Create a New folder with the name in from clipboard and open the folder
+{
+    if (A_Clipboard != "") {
+        Send("!h" "n")
+        Sleep 500
+        Send ("^v")
+        Sleep 100
+        Send ("{Enter}")
+        Sleep 100
+        Send ("{Enter}")
+    } 
+}
+
+^h:: ; Show/Hide hidden Files
+{
+    RegKeyVar := "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+    HiddenFilesStatus := RegRead(RegKeyVar, "Hidden")
+        if (HiddenFilesStatus = 2) {
+            RegWrite(1, "REG_DWORD", RegKeyVar, "Hidden")
+            RegWrite(1, "REG_DWORD", RegKeyVar, "ShowSuperHidden")
+        } else {
+            RegWrite(2, "REG_DWORD", RegKeyVar, "Hidden")
+            RegWrite(0, "REG_DWORD", RegKeyVar, "ShowSuperHidden")
+        }
+        PostMessage(0x111, 28931, 0, , ) ;Refresh the Explorer window inside container
+        PostMessage(0x111, 41504, 0, , ) ;Refresh the Explorer window 
+    }
+
+^e:: ; Show Hide File Extension
+{
+    RegKeyVar := "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+    FileExtStatus := RegRead(RegKeyVar, "HideFileExt")
+        if (FileExtStatus = 1) {
+            RegWrite(0, "REG_DWORD", RegKeyVar, "HideFileExt")
+            } else {
+                RegWrite(1, "REG_DWORD", RegKeyVar, "HideFileExt")
+            }
+            PostMessage(0x111, 28931, 0, , ) ;Refresh the Explorer window inside container
+            PostMessage(0x111, 41504, 0, , ) ;Refresh the Explorer window 
+    }
+
+
+#HotIf WinExist("ahk_exe explorer.exe")
+#e:: ; Press WIN+E to activate all File Explorer windows
+{
+    for WinID in WinGetList("ahk_class Clover_WidgetWin_0") ; Find all File Explorer windows
+    {
+        WinActivate(WinID) ; Activate each window
+        ;WinID := WinGetID("A") #info get active window ID
+        ;MsgBox(win)
+        ;Sleep(50) ; Optional: Add a delay between activations
+    }
+    return
+}
 
 #HotIf WinActive("ahk_exe LabVIEW.exe")
 
@@ -151,6 +196,7 @@ ChangeCase(Text) {
     Send "{Enter}"
 }
 
+::.ia::
 ::.index::
 {
     Send "^ "
@@ -174,6 +220,16 @@ ChangeCase(Text) {
     Send "^ "
     Sleep 200
     Send "While Loop"
+    Sleep 250
+    Send "{Enter}"
+}
+
+::.type::
+::.tc::
+{
+    Send "^ "
+    Sleep 200
+    Send "Type Cast"
     Sleep 250
     Send "{Enter}"
 }
@@ -349,12 +405,10 @@ ChangeCase(Text) {
 ::rs.::₹
 ::eur.::€
 ::usd.::$
-::+-::
+::+-::±
 ::+.::±
 :*:deg.::°
 :*:micro.::µ
-
-
 ::asap.::as soon as possible.
 ::eod.::end of the day.
 ::gm.::Good Morning
@@ -363,8 +417,9 @@ ChangeCase(Text) {
 ::sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#082024
 
+#!v:: Run("C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
-::>help::
+::>help:: 
 {
     Run("C:\Program Files\AutoHotkey\v2\AutoHotkey.chm")
 }
@@ -382,6 +437,12 @@ ChangeCase(Text) {
 ::q.::      ;for both "q." and  "qod." same code will be executed
 ::qod.::
 {
+	Send "QOD " FormatTime(, "dd-MM-yyyy")
+}
+
+::q*::      ;for both "q." and  "qod." same code will be executed
+::qod*::
+{
 	Send "{*}QOD " FormatTime(, "dd-MM-yyyy") "{*}"
 }
 
@@ -393,6 +454,10 @@ ChangeCase(Text) {
 /************* End Global Keys**************************************/
 /************* Start Windows Scripts *******************************/
 
+#^+a::
+{
+    MsgBox(WinActive("A"))
+}
 #c::
 {
     ClipSaved := ClipboardAll ; Save the current clipboard to restore later
@@ -401,29 +466,8 @@ ChangeCase(Text) {
     ClipWait ; Wait for the clipboard to contain data
     Text := A_Clipboard  ; Get the clipboard data
     if (Text != "") {
-        ClipVariable := ChangeCase(Text) ; Convert to title case
+        ClipVariable := ChangeCase(Text) ; Convert to title case "ChangeCase" defined in samfunctions
         A_Clipboard := ClipVariable ; assign value to clipboard
-        Send "^v" ; Paste the modified text
-    }
-    return
-}
-
-#+c:: ;WIN+SHIFT+C
-{
-    ClipSaved := ClipboardAll ; Save the current clipboard to restore later
-    A_Clipboard := "" ; Clear the clipboard
-    Send "{End}" ; Move cursor to end
-    Send "+{Home}" ; Select characters to end
-    Send "^c" ; Copy the selected text to clipboard
-    ClipWait ; Wait for the clipboard to contain data
-    Text := A_Clipboard  ; Get the clipboard data
-;    MsgBox Text
-    if (Text != "") {
-        ClipVariable := ChangeCase(Text) ; Convert to title case
-        Sleep 50
-;        MsgBox ClipVariable
-        A_Clipboard := ClipVariable ; assign value to clipboard
-        Sleep 2000
         Send "^v" ; Paste the modified text
     }
     return

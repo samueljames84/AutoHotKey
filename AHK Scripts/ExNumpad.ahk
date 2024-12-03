@@ -1,4 +1,5 @@
 #SingleInstance force
+#Requires AutoHotkey v2.0
 Persistent
 #include <AutoHotInterception>
 
@@ -74,12 +75,18 @@ If WinActive("ahk_exe LabVIEW.exe") {
 		Send "^ "
 		Sleep 200
 		Send "^s"
-;	} else if code = 82 {	;Numpad0 >>>>>>> Reserved >>>>>> for Copy
-
-;	} else if code = 83 {	;Dot/Delete
-
-;	} else if code = 284 {	;Enter >>>>>>> Reserved >>>>>> For Paste
-
+	} else if code = 82 {	;Numpad0 > Copy
+		Send "^c"
+		ToolTip("Copied")
+		Sleep 500
+		Tooltip
+	} else if code = 83 {	;Dot/Delete
+		Send "^x"
+		ToolTip("Cut")
+		Sleep 500
+		Tooltip
+	} else if code = 284 {	;Enter >>>>>>> Reserved >>>>>> For Paste
+		Send "^v"
 ;	} else if code = 309 {	;Slash
 
 ;	} else if code = 325 {	;NumLock >>>>>>> Reserved >>>>>> Cannot be used

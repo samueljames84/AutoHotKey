@@ -25,6 +25,8 @@ SetNumLockState "AlwaysOn"
     } 
 }
 
+^u:: Run("appwiz.cpl")
+
 ^h:: ; Show/Hide hidden Files
 {
     RegKeyVar := "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
@@ -54,7 +56,7 @@ SetNumLockState "AlwaysOn"
     }
 
 
-#HotIf WinExist("ahk_exe explorer.exe")
+#HotIf WinExist("ahk_exe clover.exe")
 #e:: ; Press WIN+E to activate all File Explorer windows
 {
     for WinID in WinGetList("ahk_class Clover_WidgetWin_0") ; Find all File Explorer windows
@@ -416,7 +418,6 @@ SetNumLockState "AlwaysOn"
 ::sj.::samueljames84@gmail.com
 ::sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#082024
-
 #!v:: Run("C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
 ::>help:: 

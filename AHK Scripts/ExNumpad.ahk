@@ -2,7 +2,7 @@
 #Requires AutoHotkey v2.0
 Persistent
 #include <AutoHotInterception>
-
+global UserProfile := EnvGet("USERPROFILE")
 AHI := AutoHotInterception()
 
 keyboardId := AHI.GetKeyboardId(0x13BA, 0x0001)
@@ -39,7 +39,7 @@ If state = true {
 					}
                 }
         } else {
-            Run("C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+            Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
         }
 
 	} else if code = 71 {	;Numpad7 > Place Unbundle By Name

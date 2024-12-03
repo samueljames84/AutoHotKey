@@ -3,7 +3,7 @@
 #Include SamFunctions.ahk
 Persistent
 SetNumLockState "AlwaysOn"
-
+global UserProfile := EnvGet("USERPROFILE")
 
 /************* End Initialization *********************************/
 /******************************************************************/
@@ -418,7 +418,7 @@ SetNumLockState "AlwaysOn"
 ::sj.::samueljames84@gmail.com
 ::sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#082024
-#!v:: Run("C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+#!v:: Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
 ::>help:: 
 {

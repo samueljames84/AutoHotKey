@@ -1,7 +1,10 @@
+Persistent
 #SingleInstance force
 #Requires AutoHotkey v2.0
-Persistent
 #include <AutoHotInterception>
+#Include SamFunctions.ahk
+#Include LabVIEW.ahk
+
 global UserProfile := EnvGet("USERPROFILE")
 AHI := AutoHotInterception()
 
@@ -23,117 +26,71 @@ If state = true {
 
 	} else if code = 14 {	;Backspace > Smart Paste
         If WinActive("ahk_exe LabVIEW.exe"){
-            Send "^ "
-            Sleep 200
-            Send "^v"
+			QuickAction("^v")
         }
-
 	} else if code = 55 {	;Asterisk(*)
-		if (PID := ProcessExist("code.exe")){
-			;for WinID in WinGetList("ahk_class Chrome_WidgetWin_1") {
-			for WinID in WinGetList("ahk_class Chrome_WidgetWin_1") {
-				;for WinID in WinGetId("ahk_exe Code.exe") {
-				ProcessName := WinGetProcessName(WinID)
-				if ProcessName = "Code.exe"{
-					WinActivate(WinID) ; Activate each window
-					}
-                }
-        } else {
+		NoOfInst := GetNoOfInstances("Code.exe","ahk_class Chrome_WidgetWin_1")
+		If NoOfInst != 0 {
+			ActivateAll("Code.exe","ahk_class Chrome_WidgetWin_1")
+		} else {
             Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
         }
-
 	} else if code = 71 {	;Numpad7 > Place Unbundle By Name
         If WinActive("ahk_exe LabVIEW.exe"){
-            Send "^ "
-            Sleep 200
-            Send "Unbundle By Name"
-            Sleep 250
-            Send "{Enter}"
+			QuickDrop("Unbundle By Name")
         }
-
 	} else if code = 72 {	;Numpad8 > Place property Node
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "Property Node"
-		Sleep 250
-		Send "{Enter}"
+			QuickDrop("Property Node")
         }
 ;	} else if code = 73 {	;Numpad9
-
 	} else if code = 74 {	;Minus(_) > Smart Delete/Remove 
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "^r"
+			QuickAction("^r")
         }
 	} else if code = 75 {	;Numpad4 > Place Bundle by name
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "Bundle By Name"
-		Sleep 250
-		Send "{Enter}"
+			QuickDrop("Bundle By Name")
         }
 	} else if code = 76 {	;Numpad5 > Place Invoke Node
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "Invoke Node"
-		Sleep 250
-		Send "{Enter}"
+			QuickDrop("Invoke Node")
         }
 ;	} else if code = 77 {	;Numpad6
-
 	} else if code = 78 {	;Numpad+ > Insert New VI
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "^n"
-        }
+			QuickAction("^n")
+		}
 	} else if code = 79 {	;Numpad1 > Auto Align
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-        Sleep 200
-        Send "^a"
+			QuickAction("^a")
         }
 	} else if code = 80 {	;Numpad2 > Frontpanel Align Controls with connector pane 
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "^f"
-		Send "^ "
+			QuickAction("^f")
         }
 	} else if code = 81 {	;Numpad3 > Smart Operations
         If WinActive("ahk_exe LabVIEW.exe"){
-		Send "^ "
-		Sleep 200
-		Send "^s"
+			QuickAction("^s")
         }
 	} else if code = 82 {	;Numpad0 > Copy
 		Send "^c"
-		ToolTip("Copied")
-		Sleep 500
-		Tooltip
+		Tip("Copied", 500)
 	} else if code = 83 {	;Dot/Delete
 		Send "^x"
-		ToolTip("Cut")
-		Sleep 500
-		Tooltip
+		Tip("Cut", 500)
 	} else if code = 284 {	;Enter >>>>>>> Reserved >>>>>> For Paste
 		Send "^v"
 	} else if code = 309 {	;Slash
-        if (PID := ProcessExist("clover.exe")){
-            for WinID in WinGetList("ahk_class Clover_WidgetWin_0") {
-                WinActivate(WinID) ; Activate each window
-                }
-        } else {
+		NoOfInst := GetNoOfInstances("","ahk_class Clover_WidgetWin_0")
+		If NoOfInst != 0 {
+			ActivateAll("","ahk_class Clover_WidgetWin_0")
+		} else {
             Run("explorer.exe") 
         }
-    } else if code = 325 {	;NumLock >>>>>>> Reserved >>>>>> Cannot be used
-
+;    } else if code = 325 {	;NumLock >>>>>>> Reserved >>>>>> Cannot be used
 	} else {
-		ToolTip("Unregistered Keyboard Key - Code: " code ", State: " state)
+		ToolTip("Unregistered Key Code: " code ", State: " state)
 		Sleep 1000
 		Tooltip
 	}

@@ -2,6 +2,8 @@
 #SingleInstance force
 #Include SamFunctions.ahk
 #Include LabVIEW.ahk
+#Include Monitor.ahk
+
 
 Persistent
 SetNumLockState "AlwaysOn"
@@ -22,18 +24,47 @@ global UserProfile := EnvGet("USERPROFILE")
 
 #HotIf WinExist("ahk_exe clover.exe")
 #e:: ActivateAll("","ahk_class Clover_WidgetWin_0") ; Press WIN+E to activate all File Explorer windows
-#HotIf WinExist("ahk_exe Telegram.exe")
-#n::
-{
-    MsgBox("This hotkey works only in Telegram! Hey","Title Sam2")
-    WinActivate
-}
 
 /*************  End Test App *********************************/
 /******************************************************************/
 /*************  Start Global Keys ********************************/
 
 #HotIf 
+#!.:: ExitApp                   ;(WIN + ALT + .) Exit the sctipt
+#+e::AlignFileExplorer()
+#NumpadEnter::SetWindow(1)
+#NumpadAdd::SetWindow(2)        ; 2/3 of screen towards right
+#NumpadDot::SetWindow(22)
+#Numpad0::SetWindow(12)
+#Numpad1::SetWindow(13)
+#Numpad2::SetWindow(23)
+#Numpad3::SetWindow(33)
+#Numpad4::SetWindow(46)
+#Numpad5::SetWindow(56)
+#Numpad6::SetWindow(66)
+#Numpad7::SetWindow(16)
+#Numpad8::SetWindow(26)
+#Numpad9::SetWindow(36)
+
+#!a::{
+    PC := GetProcessAndClassName(WinActive("A"))
+    ProcessName := PC.ProcessName
+    ClassName := PC.ClassName
+    WinList := GetWinList(ProcessName,ClassName)
+    NoOfInst := WinList.Length
+    ActivateAll(ProcessName,ClassName)
+    SetAllWindowPosition(WinList)
+}
+
+#a::{
+    PC := GetProcessAndClassName(WinActive("A"))
+    ProcessName := PC.ProcessName
+    ClassName := PC.ClassName
+    ActivateAll(ProcessName, ClassName)
+}
+#c::ChangeCase()
+#^+s::Run("winspy")
+
 ::gbp.::£
 ::rs.::₹
 ::eur.::€
@@ -56,7 +87,7 @@ global UserProfile := EnvGet("USERPROFILE")
 }
 
 ::dt.::{
-    Send FormatTime(, "yyyyMMdd")
+Send FormatTime(, "yyyyMMdd")
 }
 
 ::dt-::{
@@ -76,18 +107,4 @@ global UserProfile := EnvGet("USERPROFILE")
 ^!+.::{ ;(CTRL + ALT + SHIFT + .) Exit the sctipt
 	ExitApp
 }
-
-/************* End Global Keys**************************************/
-/************* Start Windows Scripts *******************************/
-
-#a::{
-    ClassName := "ahk_class " . WinGetClass(WinActive("A"))
-    ProcessName := WinGetProcessName(WinActive("A")) 
-    ActivateAll(ProcessName, ClassName)
-}
-#c::ChangeCase()
-#^+s::Run("winspy")
-
-/**************** END OF SCRIPT ***********************************/
-/******************************************************************/
 

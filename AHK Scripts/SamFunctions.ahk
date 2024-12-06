@@ -30,24 +30,6 @@ ChangeText(Text) {
 }
 ;====================================================================================
 
-GetMonitorNumber(WinID)
-{
-    WinGetPos &X, &Y, &W, &H, WinID  
-    X:=X+10
-    Y:=Y+10
-    ; MsgBox(", " X "<->" Y )
-    MonitorCount := SysGet(80)
-    Loop MonitorCount
-        {
-            MonitorGet A_Index, &Left, &Top, &Right, &Bottom  
-            if (X >= Left && Y >= Top && X <= Right && Y <= Bottom){
-                MonNum := A_Index
-                break
-            }
-        } return MonNum
-}
-;====================================================================================
-
 GetNoOfInstances(ProcessName,ClassName)
 {
     i := 0

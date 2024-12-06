@@ -4,6 +4,7 @@ Persistent
 #include <AutoHotInterception>
 #Include SamFunctions.ahk
 #Include LabVIEW.ahk
+#Include Monitor.ahk
 
 global UserProfile := EnvGet("USERPROFILE")
 AHI := AutoHotInterception()
@@ -98,10 +99,7 @@ If state = true {
 }
 /*********************End of Static Keys************************* */
 /*********************ALL KeyBoards****************************** */
-^!+.:: ;(CTRL + ALT + SHIFT + .) Exit the sctipt
-{
-	ExitApp
-}
+#!.:: ExitApp ;(WIN + ALT + .) Exit the sctipt
 /******************************************************************/
 /*********************END OF CODE *********************************/
 /******************************************************************

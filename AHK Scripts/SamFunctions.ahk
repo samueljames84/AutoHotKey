@@ -121,7 +121,6 @@ ShowOrHideFileExtension()
             } else {
                 RegWrite(1, "REG_DWORD", RegKeyVar, "HideFileExt")
             }
-            PostMessage(0x111, 28931, 0, , ) ;Refresh the Explorer window inside container
             PostMessage(0x111, 41504, 0, , ) ;Refresh the Explorer window 
     }
 ;====================================================================================
@@ -146,3 +145,28 @@ Tip(Text,Time)
     Sleep Time
     Tooltip
 }
+
+
+ActivateZoom()
+{
+    If WinExist("ahk_exe Zoom.exe"){
+        ;WinActivate("ahk_class ConfMultiTabContentWndClass")
+        try{
+            WinActivate("ahk_class ZPFloatVideoWndClass")
+            WinGetPos &X, &Y, &W, &H, "ahk_class ZPFloatVideoWndClass"    
+            MouseMove X+50, Y+50
+            MouseClick "left", X+W-10, Y+10 
+        }
+        try{
+            WinMaximize("ahk_class ConfMultiTabContentWndClass") ; Maximize the Zoom window
+        }
+    } try {
+        Run('"C:\Users\Sam\AppData\Roaming\Zoom\bin\Zoom.exe" --url="https://us02web.zoom.us/j/9500123870?pwd=UGo2a0Vnby9MU2xIRVZIaWZRaTBHZz09"')
+    }
+}
+
+/*
+Zoom Workplace
+ahk_class ZPPTMainFrmWndClassEx
+ahk_exe Zoom.exe
+ahk_class ZPFloatVideoWndClass

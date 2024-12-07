@@ -102,7 +102,7 @@ SetWindowPosition(MonitorNumber, Position, WinID)
         Position := 1    
     }
     
-    WinMove PosLeft, PosTop, Width, Height, WinID
+    WinMove PosLeft-2, PosTop, Width, Height, WinID
     if Position = 1 {
         WinMaximize(WinID)
     }
@@ -116,7 +116,6 @@ GetMonitorNumber(WinID)
     X:=X+10
     Y:=Y+10
     MonNum := MonitorGetPrimary()
-    ; MsgBox(", " X "<->" Y )
     MonitorCount := SysGet(80)
     Loop MonitorCount
         {

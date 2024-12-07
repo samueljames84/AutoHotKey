@@ -12,6 +12,10 @@ global UserProfile := EnvGet("USERPROFILE")
 /************* End Initialization *********************************/
 /*       | ^ CTRL | + SHIFT | ! ALT | # WIN |
 /******************************************************************/
+
+;#HotIf WinExist("ahk_exe Zoom.exe")
+;#!z::ActivateAll("ahk_exe Zoom.exe", "ahk_class ZPPTMainFrmWndClassEx")
+
 #HotIf WinExist("ahk_exe Code.exe")
 #!v::WinActivate("ahk_exe Code.exe")
 
@@ -31,6 +35,7 @@ global UserProfile := EnvGet("USERPROFILE")
 
 #HotIf 
 #!.:: ExitApp                   ;(WIN + ALT + .) Exit the sctipt
+#!z::ActivateZoom()
 #+e::AlignFileExplorer()
 #NumpadEnter::SetWindow(1)
 #NumpadAdd::SetWindow(2)        ; 2/3 of screen towards right
@@ -45,23 +50,19 @@ global UserProfile := EnvGet("USERPROFILE")
 #Numpad7::SetWindow(16)
 #Numpad8::SetWindow(26)
 #Numpad9::SetWindow(36)
-
-#!a::{
-    PC := GetProcessAndClassName(WinActive("A"))
-    ProcessName := PC.ProcessName
-    ClassName := PC.ClassName
-    WinList := GetWinList(ProcessName,ClassName)
+#BackSpace::{
+    ObjVar := GetProcessAndClassName(WinActive("A"))
+    WinList := GetWinList(ObjVar.ProcessName,ObjVar.ClassName)
     NoOfInst := WinList.Length
-    ActivateAll(ProcessName,ClassName)
+    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
     SetAllWindowPosition(WinList)
 }
 
 #a::{
-    PC := GetProcessAndClassName(WinActive("A"))
-    ProcessName := PC.ProcessName
-    ClassName := PC.ClassName
-    ActivateAll(ProcessName, ClassName)
+    ObjVar := GetProcessAndClassName(WinActive("A"))
+    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
 }
+
 #c::ChangeCase()
 #^+s::Run("winspy")
 
@@ -107,4 +108,6 @@ Send FormatTime(, "yyyyMMdd")
 ^!+.::{ ;(CTRL + ALT + SHIFT + .) Exit the sctipt
 	ExitApp
 }
+
+
 

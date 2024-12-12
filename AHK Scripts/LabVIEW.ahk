@@ -23,7 +23,7 @@ InsertBundleByName()
     Send "^ "
     Sleep 200
     Send "Bundle By Name"
-    Sleep 200
+    Sleep 250
     Send "^i"
 }
 ;====================================================================================

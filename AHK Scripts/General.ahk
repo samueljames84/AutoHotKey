@@ -3,7 +3,7 @@
 #Include SamFunctions.ahk
 #Include LabVIEW.ahk
 #Include Monitor.ahk
-
+#Include ..\Lib\TapHoldManager.ahk ; Retative path to this file
 
 Persistent
 SetNumLockState "AlwaysOn"
@@ -72,14 +72,14 @@ global UserProfile := EnvGet("USERPROFILE")
 ::usd.::$
 ::+-::±
 ::+.::±
-:*:deg.::°
+:O*:deg.::°
 :*:micro.::µ
 ::asap.::as soon as possible.
 ::eod.::end of the day.
 ::gm.::Good Morning
 :O:uan::100330286155
-::sj.::samueljames84@gmail.com
-::sv.::sajam@vestas.com
+:O:sj.::samueljames84@gmail.com
+:O:sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#082024
 #!v:: Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 

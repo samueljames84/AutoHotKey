@@ -2,35 +2,11 @@
 #SingleInstance force
 #Include SamFunctions.ahk
 #Include Monitor.ahk
-;#Include ExpirementalFunctions.ahk
+#Include ExpirementalFunctions.ahk
+#Include ..\Lib\TapHoldManager.ahk ; Retative path to this file
 
-#!.:: ExitApp ;(WIN + ALT + .) Exit the sctipt
+thm := TapHoldManager()
+;thm.Add("3", TestFunction())
 
-
-
-/*
-#9::{
-    ;MonitorNo := GetMonitorNumber(WinActive("A"))
-    ClassName := "ahk_class " . WinGetClass(WinActive("A"))
-    ProcessName := WinGetProcessName(WinActive("A")) 
-    If ProcessName == "explorer.exe"{
-        ProcessName := ""
-        ClassName := "ahk_class Clover_WidgetWin_0"
-    }
-    WinList := GetWinList(ProcessName,ClassName)
-    NoOfInst := WinList.Length
-    ActivateAll(ProcessName,ClassName)
-    SetAllWindowPosition(WinList)
-
-    ;SetWindowPosition(MonitorNo, 1, WinList[1])
-}
-*/
-
-
-
-#8::{
-    ;SysGet, OutputVar, MonitorWorkArea, 1E
-    MonitorGetWorkArea 1, &Left, &Top, &Right, &Bottom
-    MsgBox(Left " | " Top " | " Right " | " Bottom)
-}
-
+thm.Add("1", MyFunc1)
+thm.Add("2", MyFunc2)

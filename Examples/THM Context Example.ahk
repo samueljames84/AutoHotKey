@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 ; Exmaple of Context Specific hotkeys (Only applies to a certain window)  
 ; If the library files are in a subfolder called Lib next to the script, use this
-#include Lib\TapHoldManager.ahk
+#include ..\Lib\TapHoldManager.ahk
 ; If you placed all the library files in your My Documents\AutoHotkey\lib folder, use this
 ;#include <TapHoldManager>
 

@@ -1,7 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 
-#include Lib\TapHoldManager.ahk
+#include ..\Lib\TapHoldManager.ahk
 
 thm := TapHoldManager()
 thm.Add("1", MyFunc1)

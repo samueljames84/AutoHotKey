@@ -1,6 +1,6 @@
 #SingleInstance force
 Persistent
-#include Lib\AutoHotInterception.ahk
+#include ..\Lib\AutoHotInterception.ahk
 
 AHI := AutoHotInterception()
 

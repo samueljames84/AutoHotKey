@@ -1,4 +1,6 @@
 #Requires AutoHotkey v2.0
+#SingleInstance Force
+
 /*
 Remaps Keyboard Numpad to Mouse cursor movement
 Press and hold a key to move
@@ -6,7 +8,7 @@ Double-tap and hold to move quicker
 Triple-tap and hold to move even quicker
 etc...
 */
-#include Lib\TapHoldManager.ahk
+#include ..\Lib\TapHoldManager.ahk
 MoveMultiplier := 5
 InitMoveVectors()
 

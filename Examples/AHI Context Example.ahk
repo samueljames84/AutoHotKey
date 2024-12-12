@@ -1,6 +1,6 @@
 #SingleInstance force
 Persistent
-#include Lib\AutoHotInterception.ahk
+#include ..\Lib\AutoHotInterception.ahk
 
 AHI := AutoHotInterception()
 id1 := AHI.GetKeyboardId(0x13BA, 0x0001, 1)

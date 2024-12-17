@@ -1,5 +1,10 @@
 ;====================================================================================
 ;====================================================================================
+LabVIEWComment()
+{
+Output:=FormatTime(A_Now, "yyyyMMdd")
+SendText(Output . " #SAJAM ")
+}
 ;====================================================================================
 QuickDrop(ItemName)
 {
@@ -38,6 +43,7 @@ InsertBundleByName()
 !v::QuickAction("^v") ;ALT+V Replace with clipboard
 !Delete:: QuickAction("^r") ;ALT+Delete
 !b::InsertBundleByName() ;ALT+B Insert Bundle By Name
+!c::LabVIEWComment()
 
 !u:: ;ALT+U
 ::.un::{

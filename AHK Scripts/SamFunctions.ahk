@@ -164,6 +164,18 @@ ActivateZoom()
         Run('"C:\Users\Sam\AppData\Roaming\Zoom\bin\Zoom.exe" --url="https://us02web.zoom.us/j/9500123870?pwd=UGo2a0Vnby9MU2xIRVZIaWZRaTBHZz09"')
     }
 }
+;====================================================================================
+
+RenameFromClipboard()
+{
+    if (A_Clipboard != "") {
+        Send("{F2}")
+        Send ("^v{Enter}")
+    } 
+}
+
+
+
 
 /*
 Zoom Workplace

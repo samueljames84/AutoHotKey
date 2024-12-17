@@ -20,6 +20,8 @@ global UserProfile := EnvGet("USERPROFILE")
 #!v::WinActivate("ahk_exe Code.exe")
 
 #HotIf WinActive("ahk_exe explorer.exe")
+^R:: ; Rename from ClipBoard Code in next line
+^F2:: RenameFromClipboard()
 ^!v::NewFolderFromClipboard() ;Create a New folder with the name in from clipboard and open the folder
 ^p::Run("shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}") ;Open Printers Window in file explorer
 ^u::Run("appwiz.cpl")

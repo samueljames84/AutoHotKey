@@ -1,3 +1,51 @@
+VScodePath() {
+    VsPath:=(EnvGet("USERPROFILE") "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+    return VsPath
+}
+/*
+LaunchVSCode(FilePath) {
+    VsPath:=(EnvGet("USERPROFILE") "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+    Run(VsPath . ' "' . FilePath . '"')
+}*/
+;====================================================================================
+
+OpenWithVScode(filePath)
+{
+    ; vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
+    VScode:=VScodePath()
+    ClipClear:=0
+    if not FileExist(filePath){
+        filePath := ClipPath()
+        ClipClear:=1
+    }
+    if not FileExist(filePath){
+        Send("^c")
+        Sleep 50
+        filePath := ClipPath()
+        ClipClear:=1
+    }
+    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
+        if ClipClear == 1 {
+            A_Clipboard := ""
+        }
+        RunApp:= VScode . ' "' . filePath . '"'
+        try {
+            Run(RunApp)  ; Open the file in VSCode
+        }
+        } else {
+    MsgBox("Not a Valid file to open in VScode: `n" filePath)
+    }
+}
+
+ClipPath()
+{
+    clipboardText := A_Clipboard  ; Get the text from the clipboard
+    clipboardText:=StrReplace(clipboardText, "`r")
+    clipboardText:=StrReplace(clipboardText, "`n")
+    filePath := clipboardText   ; Store clipboard text as a file path
+    return filePath
+}
+
 ;====================================================================================
 ; ChangeCase >>Convert a sentence with the every 1st letter of the word with capital letter
 ChangeCase()
@@ -175,40 +223,6 @@ RenameFromClipboard()
 }
 ;====================================================================================
 
-OpenWithVScode(filePath)
-{
-    vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
-    ClipClear:=0
-    if not FileExist(filePath){
-        filePath := ClipPath()
-        ClipClear:=1
-    }
-    if not FileExist(filePath){
-        Send("^c")
-        Sleep 50
-        filePath := ClipPath()
-        ClipClear:=1
-    }
-    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
-        if ClipClear == 1 {
-            A_Clipboard := ""
-        }
-        RunApp:= vscodePath . ' "' . filePath . '"'
-        Run(RunApp)  ; Open the file in VSCode
-    } else {
-    MsgBox("Not a Valid file to open in VScode: `n" filePath)
-    }
-}
-
-ClipPath()
-{
-    clipboardText := A_Clipboard  ; Get the text from the clipboard
-    clipboardText:=StrReplace(clipboardText, "`r")
-    clipboardText:=StrReplace(clipboardText, "`n")
-    filePath := clipboardText   ; Store clipboard text as a file path
-    return filePath
-}
-;====================================================================================
 
 /* 
 Run(Target [, WorkingDir := A_WorkingDir, LaunchOpt := '', &OutputPID]) => EmptyString

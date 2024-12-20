@@ -83,7 +83,7 @@ global UserProfile := EnvGet("USERPROFILE")
 :O:sj.::samueljames84@gmail.com
 :O:sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#022025
-#!v:: Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+#!v:: Run(VScodePath())
 
 ::>help::{
     Run("C:\Program Files\AutoHotkey\v2\AutoHotkey.chm")

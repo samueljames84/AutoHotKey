@@ -51,7 +51,7 @@ global UserProfile := EnvGet("USERPROFILE")
 #Numpad7::SetWindow(16)
 #Numpad8::SetWindow(26)
 #Numpad9::SetWindow(36)
-#O::OpenWithVScode()
+#O::OpenWithVScode("")
 #BackSpace::{
     ObjVar := GetProcessAndClassName(WinActive("A"))
     WinList := GetWinList(ObjVar.ProcessName,ObjVar.ClassName)
@@ -110,4 +110,3 @@ Send FormatTime(, "yyyyMMdd")
 ^!+.::{ ;(CTRL + ALT + SHIFT + .) Exit the sctipt
 	ExitApp
 }
-

@@ -175,18 +175,24 @@ RenameFromClipboard()
 }
 ;====================================================================================
 
-OpenWithVScode()
+OpenWithVScode(filePath)
 {
     vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
-    filePath := ClipPath()
+    ClipClear:=0
+    if not FileExist(filePath){
+        filePath := ClipPath()
+        ClipClear:=1
+    }
     if not FileExist(filePath){
         Send("^c")
         Sleep 50
         filePath := ClipPath()
+        ClipClear:=1
     }
-
     if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
-        A_Clipboard := ""
+        if ClipClear == 1 {
+            A_Clipboard := ""
+        }
         RunApp:= vscodePath . ' "' . filePath . '"'
         Run(RunApp)  ; Open the file in VSCode
     } else {

@@ -49,5 +49,5 @@ returnArray2() {
     return [x, y]
 }
 ArrayVariable := returnArray2()
-1stElement := ArrayVariable[1] ; Gets the x value from the function
+FirstElement := ArrayVariable[1] ; Gets the x value from the function
 

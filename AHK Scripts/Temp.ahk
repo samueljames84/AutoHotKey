@@ -3,7 +3,12 @@
 #Include SamFunctions.ahk
 #Include Monitor.ahk
 #Include ExpirementalFunctions.ahk
+#Include TempFunctions.ahk
 #Include ..\Lib\TapHoldManager.ahk ; Retative path to this file
+
+
+
+
 
 thm := TapHoldManager()
 ;thm.Add("3", TestFunction())

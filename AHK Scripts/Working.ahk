@@ -23,3 +23,23 @@
     return
 }
 
+
+OpenWithVScode()
+{
+    vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
+    clipboardText := A_Clipboard  ; Get the text from the clipboard
+    clipboardText:=StrReplace(clipboardText, "`r")
+    clipboardText:=StrReplace(clipboardText, "`n")
+    filePath := clipboardText   ; Store clipboard text as a file path
+    RunApp:= vscodePath . ' "' . filePath . '"'
+    if not FileExist(filePath){
+        Send("^c")
+    }
+
+    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
+        A_Clipboard := ""
+        Run(RunApp)  ; Open the file in VSCode
+    } else {
+    MsgBox("Not a Valid file to open in VScode: `n" filePath)
+    }
+}

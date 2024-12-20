@@ -173,11 +173,39 @@ RenameFromClipboard()
         Send ("^v{Enter}")
     } 
 }
+;====================================================================================
 
+OpenWithVScode()
+{
+    vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
+    filePath := ClipPath()
+    if not FileExist(filePath){
+        Send("^c")
+        Sleep 50
+        filePath := ClipPath()
+    }
 
+    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
+        A_Clipboard := ""
+        RunApp:= vscodePath . ' "' . filePath . '"'
+        Run(RunApp)  ; Open the file in VSCode
+    } else {
+    MsgBox("Not a Valid file to open in VScode: `n" filePath)
+    }
+}
 
+ClipPath()
+{
+    clipboardText := A_Clipboard  ; Get the text from the clipboard
+    clipboardText:=StrReplace(clipboardText, "`r")
+    clipboardText:=StrReplace(clipboardText, "`n")
+    filePath := clipboardText   ; Store clipboard text as a file path
+    return filePath
+}
+;====================================================================================
 
-/*
+/* 
+Run(Target [, WorkingDir := A_WorkingDir, LaunchOpt := '', &OutputPID]) => EmptyString
 Zoom Workplace
 ahk_class ZPPTMainFrmWndClassEx
 ahk_exe Zoom.exe

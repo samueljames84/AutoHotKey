@@ -63,6 +63,14 @@ InsertBundleByName()
     QuickDrop("Unbundle By Name")
     } 
 
+::.bp::{
+    QuickDrop("Build Path")
+    } 
+
+::.sp::{
+    QuickDrop("Strip Path")
+    } 
+
 !s::
 ::.specific::{
     QuickDrop("To More Specific Class")

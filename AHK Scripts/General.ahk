@@ -1,9 +1,8 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 #SingleInstance force
 #Include SamFunctions.ahk
 #Include LabVIEW.ahk
 #Include Monitor.ahk
-#Include ..\Lib\TapHoldManager.ahk ; Retative path to this file
 
 Persistent
 SetNumLockState "AlwaysOn"
@@ -82,7 +81,7 @@ global UserProfile := EnvGet("USERPROFILE")
 :O:uan::100330286155
 :O:sj.::samueljames84@gmail.com
 :O:sv.::sajam@vestas.com
-:RO:vp.::ZionHouse#082024
+:RO:vp.::ZionHouse#022025
 #!v:: Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
 ::>help::{
@@ -110,6 +109,4 @@ Send FormatTime(, "yyyyMMdd")
 ^!+.::{ ;(CTRL + ALT + SHIFT + .) Exit the sctipt
 	ExitApp
 }
-
-
 

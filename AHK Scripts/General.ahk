@@ -18,6 +18,15 @@ global UserProfile := EnvGet("USERPROFILE")
 #HotIf WinExist("ahk_exe Code.exe")
 #!v::WinActivate("ahk_exe Code.exe")
 
+#HotIf WinActive("ahk_exe i_view32.exe")
+\::F8 ;Copy file to default location
+
+#HotIf WinActive("ahk_class AgWinMainFrame")
+NumpadDiv::Send "{Left}"
+Numpad9::
+NumpadMult::Send "{Right}"
+NumpadSub::Send "-"
+
 #HotIf WinActive("ahk_exe explorer.exe")
 ^R:: ; Rename from ClipBoard Code in next line
 ^F2:: RenameFromClipboard()

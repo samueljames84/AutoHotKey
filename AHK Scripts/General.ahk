@@ -18,21 +18,14 @@ global UserProfile := EnvGet("USERPROFILE")
 #HotIf WinExist("ahk_exe Code.exe")
 #!v::WinActivate("ahk_exe Code.exe")
 
-#HotIf WinActive("ahk_exe i_view32.exe")
-\::F8 ;Copy file to default location
-
-#HotIf WinActive("ahk_class AgWinMainFrame")
-NumpadDiv::Send "{Left}"
-Numpad9::
-NumpadMult::Send "{Right}"
-NumpadSub::Send "-"
-
 #HotIf WinActive("ahk_exe explorer.exe")
 ^R:: ; Rename from ClipBoard Code in next line
 ^F2:: RenameFromClipboard()
 ^!v::NewFolderFromClipboard() ;Create a New folder with the name in from clipboard and open the folder
 ^p::Run("shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}") ;Open Printers Window in file explorer
 ^u::Run("appwiz.cpl")
+Ins::
+#1::MoveFiles("D:\Library\Mobile Repository\_Information")
 ^h::ShowOrHideHiddenFiles() ; Show/Hide hidden Files
 ^e::ShowOrHideFileExtension() ; Show Hide File Extension
 
@@ -92,7 +85,7 @@ NumpadSub::Send "-"
 :O:sj.::samueljames84@gmail.com
 :O:sv.::sajam@vestas.com
 :RO:vp.::ZionHouse#022025
-#!v:: Run(VScodePath())
+#!v:: Run(UserProfile "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
 ::>help::{
     Run("C:\Program Files\AutoHotkey\v2\AutoHotkey.chm")

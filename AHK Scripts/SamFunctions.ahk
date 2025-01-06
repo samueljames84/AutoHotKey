@@ -1,51 +1,3 @@
-VScodePath() {
-    VsPath:=(EnvGet("USERPROFILE") "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-    return VsPath
-}
-/*
-LaunchVSCode(FilePath) {
-    VsPath:=(EnvGet("USERPROFILE") "\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-    Run(VsPath . ' "' . FilePath . '"')
-}*/
-;====================================================================================
-
-OpenWithVScode(filePath)
-{
-    ; vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
-    VScode:=VScodePath()
-    ClipClear:=0
-    if not FileExist(filePath){
-        filePath := ClipPath()
-        ClipClear:=1
-    }
-    if not FileExist(filePath){
-        Send("^c")
-        Sleep 50
-        filePath := ClipPath()
-        ClipClear:=1
-    }
-    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
-        if ClipClear == 1 {
-            A_Clipboard := ""
-        }
-        RunApp:= VScode . ' "' . filePath . '"'
-        try {
-            Run(RunApp)  ; Open the file in VSCode
-        }
-        } else {
-    MsgBox("Not a Valid file to open in VScode: `n" filePath)
-    }
-}
-
-ClipPath()
-{
-    clipboardText := A_Clipboard  ; Get the text from the clipboard
-    clipboardText:=StrReplace(clipboardText, "`r")
-    clipboardText:=StrReplace(clipboardText, "`n")
-    filePath := clipboardText   ; Store clipboard text as a file path
-    return filePath
-}
-
 ;====================================================================================
 ; ChangeCase >>Convert a sentence with the every 1st letter of the word with capital letter
 ChangeCase()
@@ -223,7 +175,74 @@ RenameFromClipboard()
 }
 ;====================================================================================
 
+OpenWithVScode(filePath)
+{
+    vscodePath:='"C:\Users\sajam\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
+    ClipClear:=0
+    if not FileExist(filePath){
+        filePath := ClipPath()
+        ClipClear:=1
+    }
+    if not FileExist(filePath){
+        Send("^c")
+        Sleep 50
+        filePath := ClipPath()
+        ClipClear:=1
+    }
+    if (FileExist(filePath) && FileGetSize(filePath) < 1048576) {
+        if ClipClear == 1 {
+            A_Clipboard := ""
+        }
+        RunApp:= vscodePath . ' "' . filePath . '"'
+        Run(RunApp)  ; Open the file in VSCode
+    } else {
+    MsgBox("Not a Valid file to open in VScode: `n" filePath)
+    }
+}
 
+ClipPath()
+{
+    clipboardText := A_Clipboard  ; Get the text from the clipboard
+    clipboardText:=StrReplace(clipboardText, "`r")
+    clipboardText:=StrReplace(clipboardText, "`n")
+    filePath := clipboardText   ; Store clipboard text as a file path
+    return filePath
+}
+;====================================================================================
+GetSelectedItemsInExplorer() {
+    hwnd := WinActive("ahk_class CabinetWClass") ; Active Explorer window
+    if !hwnd
+        hwnd := WinActive("ahk_class ExploreWClass") ; Fallback for older versions of Explorer
+    if !hwnd
+        return ; No Explorer window is active
+
+    ; Get the shell application COM object
+    shellApp := ComObject("Shell.Application")
+    for window in shellApp.Windows {
+        if hwnd = WinExist(window.HWND) {
+            selectedItems := window.document.SelectedItems
+            selectedPaths := []
+            for item in selectedItems {
+                selectedPaths.Push(item.Path) ; Add the item's path to the array
+            }
+            return selectedPaths ; Return the array of selected paths
+        }
+    }
+    return [] ; Return an empty string if no selection
+}
+;====================================================================================
+
+MoveFiles(FolderPath)
+{
+    FilesList:=GetSelectedItemsInExplorer()
+    for file in FilesList {
+        try {
+            FileName:=SplitPath(file, &name)
+            FileMove(file, FolderPath "\" FileName)
+        }
+    }
+}
+;====================================================================================*/
 /* 
 Run(Target [, WorkingDir := A_WorkingDir, LaunchOpt := '', &OutputPID]) => EmptyString
 Zoom Workplace

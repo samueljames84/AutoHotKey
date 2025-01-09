@@ -68,7 +68,21 @@ GetWinList(ProcessName,ClassName)
 }
 
 ;====================================================================================
-
+AutoArrange()
+{
+    ObjVar := GetProcessAndClassName(WinActive("A"))
+    WinList := GetWinList(ObjVar.ProcessName,ObjVar.ClassName)
+    NoOfInst := WinList.Length
+    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
+    SetAllWindowPosition(WinList)
+}
+;====================================================================================
+ActivateGroup()
+{
+    ObjVar := GetProcessAndClassName(WinActive("A"))
+    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
+}
+;====================================================================================
 ActivateAll(ProcessName,ClassName)
 {
     if (ProcessName == "") {
@@ -243,6 +257,23 @@ MoveFiles(FolderPath)
     }
 }
 ;====================================================================================*/
+ShowExifInfo()
+{
+    FilesList:=GetSelectedItemsInExplorer()
+    for file in FilesList {
+        try {
+            FileName:=SplitPath(file, &name)
+            Argument:="exifinfo.bat" . ' "' . file . '"'
+            Run(Argument)
+        }
+    }
+}
+
+;RunApp:= vscodePath . ' "' . filePath . '"'
+;Run(RunApp)  ; Open the file in VSCode
+;====================================================================================*/
+
+
 /* 
 Run(Target [, WorkingDir := A_WorkingDir, LaunchOpt := '', &OutputPID]) => EmptyString
 Zoom Workplace

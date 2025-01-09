@@ -20,12 +20,13 @@ global UserProfile := EnvGet("USERPROFILE")
 
 #HotIf WinActive("ahk_exe explorer.exe")
 ^R:: ; Rename from ClipBoard Code in next line
+^F1::ShowExifInfo()
 ^F2:: RenameFromClipboard()
 ^!v::NewFolderFromClipboard() ;Create a New folder with the name in from clipboard and open the folder
 ^p::Run("shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}") ;Open Printers Window in file explorer
 ^u::Run("appwiz.cpl")
 Ins::
-#1::MoveFiles("D:\Library\Mobile Repository\_Information")
+#1::MoveFiles("D:\Library\Mobile Repository\Sam Mobile\_Working\_Information")
 ^h::ShowOrHideHiddenFiles() ; Show/Hide hidden Files
 ^e::ShowOrHideFileExtension() ; Show Hide File Extension
 
@@ -54,19 +55,8 @@ Ins::
 #Numpad8::SetWindow(26)
 #Numpad9::SetWindow(36)
 #O::OpenWithVScode("")
-#BackSpace::{
-    ObjVar := GetProcessAndClassName(WinActive("A"))
-    WinList := GetWinList(ObjVar.ProcessName,ObjVar.ClassName)
-    NoOfInst := WinList.Length
-    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
-    SetAllWindowPosition(WinList)
-}
-
-#a::{
-    ObjVar := GetProcessAndClassName(WinActive("A"))
-    ActivateAll(ObjVar.ProcessName,ObjVar.ClassName)
-}
-
+#BackSpace::AutoArrange()
+#a::ActivateGroup()
 #c::ChangeCase()
 #^+s::Run("winspy")
 
